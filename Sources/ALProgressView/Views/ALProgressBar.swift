@@ -63,21 +63,22 @@ open class ALProgressBar: UIView {
     /// Timing function of the ring's fill animation. Default is `.easeOutExpo`
     public var timingFunction: ALTimingFunction = .easeOutExpo
     
+    private var lineCap:CAShapeLayerLineCap = .round
     /// The progress of the ring between 0 and 1. The ring will fill based on the value.
     public private(set) var progress: CGFloat = 0
 
-    private let ringLayer: CAShapeLayer = {
+   lazy private var ringLayer: CAShapeLayer = {
         let layer = CAShapeLayer()
-        layer.lineCap = .round
+        layer.lineCap = lineCap
         layer.fillColor = nil
         layer.strokeStart = 0
         layer.strokeEnd = 1
         return layer
     }()
     
-    private let barLayer: CAShapeLayer = {
+    lazy private var barLayer: CAShapeLayer = {
         let layer = CAShapeLayer()
-        layer.lineCap = .round
+        layer.lineCap = lineCap
         layer.fillColor = nil
         layer.strokeStart = 0
         layer.strokeEnd = 1
@@ -87,7 +88,8 @@ open class ALProgressBar: UIView {
     private let gradientLayer = CAGradientLayer()
 
     // MARK: Life Cycle
-    public init() {
+    public init(lineCap:CAShapeLayerLineCap = .round) {
+        self.lineCap = lineCap
         super.init(frame: .zero)
         setup()
     }
